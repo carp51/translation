@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+
+    {% load static %}
+    <link href="{% static 'dialy/login.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <h1 style="text-align: center;">ログイン画面</h1>
+    <p style="text-align: center;">ユーザー名とパスワードを入力してください</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if not error_message %}
+        <button type="submit">ログイン</button>
+        {% endif %}
+    </form>
+
+    {% if error_message %}
+    <p>{{ error_message }}</p>
+    <button type="submit">もう一度ログインする</button>
+    {% endif %}
+    <a href="/signup">新規登録はこちら</a>
+</body>
+<a href="/">最初の画面に戻る</a>
+</html>

@@ -2,9 +2,24 @@
 
 {% block content %}
 
+
+{% if user.is_authenticated %}
+<h3>
+    ようこそ、{{ user.username }}さん
+    <a href="{% url 'logout' %}">ログアウト</a>
+</h3>
+{% else %}
+<h3>
+    ログインしていません
+    <a href="{% url 'login' %}">ログイン</a>
+</h3>
+<p>ログインしていただくと、翻訳の内容を保存する事ができます</p>
+{% endif %}
+
+
 <form method="POST" action="{% url 'translate' %}" style="text-align: center">
     {% csrf_token %}
-    <label for="text">翻訳したい文:</label><br>
+    <label for="text">翻訳したい文</label><br>
     <textarea type="text" id="text" name="text" rows="10" cols="90"></textarea><br>
     <div style="padding-top:20px;">
         <input type="submit" name="E_to_J" value="英語 -> 日本語"  style="width:200px;height:100px;">
@@ -17,5 +32,22 @@
     <p>{{ down_arrow }}</p>
     <p>{{ translated_text }}</p>
 </div>
+
+{% if user.is_authenticated %}
+<table>
+    <tr>
+      <th style="text-align: center;">翻訳した文章</th> 
+      <th style="text-align: center;">翻訳された文章</th>
+      <th style="text-align: center;">作成日</th>
+    </tr>
+    {% for i in user_data %}
+    <tr>
+      <td>{{ i.source_text }}</td>
+      <td>{{ i.tranlated_text }}</td>
+      <td>{{ i.create_date }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
 
 {% endblock %}
