@@ -1,0 +1,21 @@
+{% extends 'dialy/base.html' %}
+
+{% block content %}
+
+<form method="POST" action="{% url 'translate' %}" style="text-align: center">
+    {% csrf_token %}
+    <label for="text">翻訳したい文:</label><br>
+    <textarea type="text" id="text" name="text" rows="10" cols="90"></textarea><br>
+    <div style="padding-top:20px;">
+        <input type="submit" name="E_to_J" value="英語 -> 日本語"  style="width:200px;height:100px;">
+        <input type="submit" name="J_to_E" value="日本語 -> 英語"  style="width:200px;height:100px;">
+    </div>
+</form> 
+
+<div style="text-align: center;padding-top:40px;">
+    <p>{{ base_text }}</p>
+    <p>{{ down_arrow }}</p>
+    <p>{{ translated_text }}</p>
+</div>
+
+{% endblock %}
